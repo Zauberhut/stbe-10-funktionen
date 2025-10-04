@@ -435,6 +435,8 @@ strip.setPixelColorRange(0, informatiktheater.colors(NeoPixelColors.Blue), 1)
 // 1: VU Meter weiss
 // 2: Grün Blau mischen sich je nach Lage des Stabes
 // 3: Zufallsmuster
+// 4: Schere Stei Papier
+// 5: 
 basic.forever(function () {
     if (programm == 0) {
         if (input.buttonIsPressed(Button.A)) {
@@ -505,8 +507,7 @@ basic.forever(function () {
             strip.show()
             basic.pause(40)
         }
-        strip.shift(0)
-        strip.rotate(input.acceleration(Dimension.X) / -80)
+        strip.rotate(input.acceleration(Dimension.X) / -120)
         strip.show()
     } else if (programm == 6) {
         strip.rotate(input.acceleration(Dimension.X) / 200)
