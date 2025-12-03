@@ -255,7 +255,7 @@ radio.onReceivedString(function (receivedString) {
         strip.show()
         strip.showColor(informatiktheater.colors(NeoPixelColors.Red))
     } else if (receivedString == "8") {
-        programm = 2
+        programm = 8
         Punkte = 0
         Position = 30
         strip.clear()
@@ -354,7 +354,7 @@ function SchäreSteiPapier () {
     music.stopAllSounds()
 }
 input.onLogoEvent(TouchButtonEvent.LongPressed, function () {
-    music.play(music.tonePlayable(523, music.beat(BeatFraction.Half)), music.PlaybackMode.UntilDone)
+    music.play(music.tonePlayable(523, music.beat(BeatFraction.Half)), music.PlaybackMode.InBackground)
     programm += 1
     if (programm > 15) {
         programm = 0
@@ -371,6 +371,7 @@ input.onLogoEvent(TouchButtonEvent.LongPressed, function () {
     } else if (programm == 3) {
         Zufallsfarben()
     } else if (programm == 4) {
+        Position = 0
         strip.clear()
         strip.show()
     } else if (programm == 5) {
@@ -378,25 +379,34 @@ input.onLogoEvent(TouchButtonEvent.LongPressed, function () {
         strip.setPixelColorRange(50, informatiktheater.colors(NeoPixelColors.Violet), 10)
         strip.show()
         basic.pause(10)
-        strip.show()
     } else if (programm == 6) {
         strip.showRainbow(1, 255)
     } else if (programm == 7) {
         Programm_1()
     } else if (programm == 8) {
-        strip.clear()
-        strip.show()
-        Punkte = 0
-        Position = 30
-        strip.clear()
-        strip.setPixelColorRange(Position, informatiktheater.colors(NeoPixelColors.Green), 3)
-        strip.show()
+    	
     } else if (programm == 9) {
         strip.clear()
         strip.show()
         Würfel = 0
         Anzahl_Pixel = 0
         Zielerreicht = 0
+    } else if (programm == 10) {
+    	
+    } else if (programm == 11) {
+        Punkte = 0
+        Position = 30
+        strip.clear()
+        strip.setPixelColorRange(Position, informatiktheater.colors(NeoPixelColors.Green), 3)
+        strip.show()
+    } else if (programm == 12) {
+    	
+    } else if (programm == 13) {
+    	
+    } else if (programm == 14) {
+    	
+    } else if (false) {
+    	
     } else {
         strip.clear()
         strip.setPixelColorRange(0, informatiktheater.colors(NeoPixelColors.Blue), 1)
@@ -411,6 +421,28 @@ function Programm_1 () {
 function Programm_off () {
     strip.showColor(informatiktheater.colors(NeoPixelColors.Black))
     strip.show()
+}
+function blitzen () {
+    strip.clear()
+    strip.setPixelColorRange(randint(0, strip.length()), informatiktheater.hsv_picker(randint(5, 220)), randint(0, strip.length() / 2))
+    strip.show()
+    basic.pause(randint(5, 100))
+}
+function füllenleeren () {
+    if (input.acceleration(Dimension.X) < 0) {
+        Position += 1
+    } else {
+        Position += -1
+    }
+    strip.setPixelColorRange(0 + Position, informatiktheater.colors(NeoPixelColors.Green), strip.length())
+    strip.setPixelColorRange(0, informatiktheater.colors(NeoPixelColors.Red), Position)
+    strip.show()
+    if (Position <= 2) {
+        Position = 2
+    }
+    if (Position >= strip.length()) {
+        Position = strip.length() - 2
+    }
 }
 function balancieren () {
     strip.clear()
@@ -463,20 +495,25 @@ _0initialisieren()
 // 1: VU Meter weiss
 // 2: Grün Blau mischen sich je nach Lage des Stabes
 // 3: Zufallsmuster
-// 4: Schere Stei Papier
-// 5: 
-// 6: 
+// 4: Stab rot grün füllen/leeren
+// 5: rote weisse Punkte
+// 6: Regenbogen
 // 7: Farben senden
-// 8: Spiel: Waage. Fehler werden am Display gezählt
+// 8: blitzen
 // 9: würfeln (schütteln) mit A Zahlen übertragen. ZIEL: Stab ganz füllen
 // 10: A Schere Stei Papier
+// 11: B Spiel: Waage. Fehler werden am Display gezählt
+// 12: C 
+// 13: D
+// 14: 
+// 15:
 basic.forever(function () {
     if (programm == 0) {
-        if (input.buttonIsPressed(Button.A)) {
+        if (input.buttonIsPressed(Button.B)) {
             strip.rotate(1)
             strip.show()
             basic.pause(10)
-        } else if (input.buttonIsPressed(Button.B)) {
+        } else if (input.buttonIsPressed(Button.A)) {
             strip.rotate(-1)
             strip.show()
             basic.pause(10)
@@ -496,7 +533,7 @@ basic.forever(function () {
     } else if (programm == 3) {
     	
     } else if (programm == 4) {
-    	
+        füllenleeren()
     } else if (programm == 5) {
         if (input.buttonIsPressed(Button.A)) {
             strip.clear()
@@ -508,22 +545,19 @@ basic.forever(function () {
             strip.setPixelColorRange(50, informatiktheater.colors(NeoPixelColors.White), 10)
             strip.show()
             basic.pause(10)
+        } else {
+        	
         }
-        if (input.buttonIsPressed(Button.AB)) {
-            strip.clear()
-            strip.show()
-            basic.pause(40)
-        }
-        strip.rotate(input.acceleration(Dimension.X) / -120)
+        strip.rotate(input.acceleration(Dimension.X) / -22)
         strip.show()
     } else if (programm == 6) {
-        strip.rotate(input.acceleration(Dimension.X) / 200)
+        strip.rotate(input.acceleration(Dimension.X) / 499)
         strip.show()
         basic.pause(10)
     } else if (programm == 7) {
     	
     } else if (programm == 8) {
-        balancieren()
+        blitzen()
     } else if (programm == 9) {
         if (Zielerreicht == 1) {
             strip.rotate(1)
@@ -557,11 +591,11 @@ basic.forever(function () {
             strip.clear()
             strip.show()
         }
-    } else if (false) {
+    } else if (programm == 11) {
+        balancieren()
+    } else if (programm == 12) {
     	
-    } else if (false) {
-    	
-    } else if (false) {
+    } else if (programm == 13) {
     	
     } else {
     	
