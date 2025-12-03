@@ -5,7 +5,7 @@
         "core": "*",
         "radio": "*",
         "microphone": "*",
-        "informatiktheater": "github:mint-n-pepper/informatiktheater#347c57b71e8710337375bbdefd6b9bc853de00fd"
+        "informatiktheater": "github:mint-n-pepper/informatiktheater#124a1936c414eacd9442397f9715732f9db63d81"
     },
     "files": [
         "main.blocks",
@@ -20,7 +20,7 @@
         "branch": "v6.0.28",
         "tag": "v6.0.28",
         "commits": "https://github.com/microsoft/pxt-microbit/commits/9d308fa3c282191768670a6558e4df8af2d715cf",
-        "target": "8.0.16",
+        "target": "8.0.18",
         "pxt": "9.0.19",
         "targetId": "microbit"
     },

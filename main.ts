@@ -154,6 +154,18 @@ input.onGesture(Gesture.Shake, function () {
     	
     } else if (programm == 9) {
         würfeln()
+    } else if (programm == 10) {
+    	
+    } else if (programm == 11) {
+    	
+    } else if (programm == 12) {
+    	
+    } else if (programm == 13) {
+    	
+    } else if (programm == 14) {
+    	
+    } else if (programm == 15) {
+    	
     } else {
     	
     }
@@ -240,6 +252,8 @@ radio.onReceivedString(function (receivedString) {
         strip.showRainbow(1, 255)
     } else if (receivedString == "7") {
         programm = 7
+        strip.show()
+        strip.showColor(informatiktheater.colors(NeoPixelColors.Red))
     } else if (receivedString == "8") {
         programm = 2
         Punkte = 0
@@ -256,9 +270,7 @@ radio.onReceivedString(function (receivedString) {
         Anzahl_Pixel = 0
         Zielerreicht = 0
     } else if (receivedString == "0") {
-        programm = 0
-        strip.clear()
-        strip.show()
+        _0initialisieren()
     } else if (receivedString == "A") {
         programm = 10
     } else if (receivedString == "B") {
@@ -307,23 +319,39 @@ input.onButtonPressed(Button.B, function () {
         strip.show()
     } else if (programm == 8) {
     	
+    } else if (false) {
+    	
+    } else if (false) {
+    	
+    } else if (false) {
+    	
+    } else if (false) {
+    	
     } else {
     	
     }
 })
+function _0initialisieren () {
+    programm = 0
+    strip.clear()
+    strip.setPixelColorRange(strip.length() / 2, informatiktheater.colors(NeoPixelColors.Blue), 3)
+    strip.show()
+}
 function SchäreSteiPapier () {
     strip.clear()
-    music.play(music.createSoundExpression(WaveShape.Sine, 1, 5000, 255, 0, 500, SoundExpressionEffect.None, InterpolationCurve.Linear), music.PlaybackMode.InBackground)
-    music.stopAllSounds()
     Farbe = randint(0, 2)
     if (Farbe == 0) {
         strip.setPixelColorRange(0, informatiktheater.colors(NeoPixelColors.Green), 40)
+        music.play(music.stringPlayable("F - F - - - - - ", 200), music.PlaybackMode.UntilDone)
     } else if (Farbe == 1) {
         strip.setPixelColorRange(0, informatiktheater.colors(NeoPixelColors.Red), 20)
+        music.play(music.stringPlayable("C - - - - - - - ", 200), music.PlaybackMode.UntilDone)
     } else {
         strip.setPixelColorRange(0, informatiktheater.colors(NeoPixelColors.Blue), 60)
+        music.play(music.stringPlayable("A - A - A - - - ", 200), music.PlaybackMode.UntilDone)
     }
     strip.show()
+    music.stopAllSounds()
 }
 input.onLogoEvent(TouchButtonEvent.LongPressed, function () {
     music.play(music.tonePlayable(523, music.beat(BeatFraction.Half)), music.PlaybackMode.UntilDone)
@@ -429,7 +457,7 @@ Zielerreicht = 0
 Programm_off()
 basic.showNumber(programm)
 music.stopAllSounds()
-strip.setPixelColorRange(0, informatiktheater.colors(NeoPixelColors.Blue), 1)
+_0initialisieren()
 // Programme:
 // 0: blauer Punkt wandert mit Knopf A + B 
 // 1: VU Meter weiss
@@ -437,6 +465,11 @@ strip.setPixelColorRange(0, informatiktheater.colors(NeoPixelColors.Blue), 1)
 // 3: Zufallsmuster
 // 4: Schere Stei Papier
 // 5: 
+// 6: 
+// 7: Farben senden
+// 8: Spiel: Waage. Fehler werden am Display gezählt
+// 9: würfeln (schütteln) mit A Zahlen übertragen. ZIEL: Stab ganz füllen
+// 10: A Schere Stei Papier
 basic.forever(function () {
     if (programm == 0) {
         if (input.buttonIsPressed(Button.A)) {
@@ -450,7 +483,7 @@ basic.forever(function () {
         }
     } else if (programm == 1) {
         strip.clear()
-        strip.showColor(informatiktheater.rgb(0, 0, 50))
+        strip.showColor(informatiktheater.rgb(0, 0, 30))
         strip.setPixelColorRange(0, informatiktheater.colors(NeoPixelColors.White), Math.map(input.soundLevel(), 40, 180, 0, 60))
         strip.show()
         basic.pause(0)
@@ -463,33 +496,7 @@ basic.forever(function () {
     } else if (programm == 3) {
     	
     } else if (programm == 4) {
-        if (Lage == 1) {
-            basic.showLeds(`
-                . . # . .
-                . # . . .
-                # . # # #
-                . # . . .
-                . . # . .
-                `)
-        } else {
-            basic.showLeds(`
-                . . # . .
-                . . . # .
-                # # # . #
-                . . . # .
-                . . # . .
-                `)
-        }
-        if (input.acceleration(Dimension.X) < 0) {
-            if (Lage == 0) {
-                Lage = 1
-                SchäreSteiPapier()
-            }
-        } else {
-            Lage = 0
-            strip.clear()
-            strip.show()
-        }
+    	
     } else if (programm == 5) {
         if (input.buttonIsPressed(Button.A)) {
             strip.clear()
@@ -522,6 +529,40 @@ basic.forever(function () {
             strip.rotate(1)
             strip.show()
         }
+    } else if (programm == 10) {
+        if (Lage == 1) {
+            basic.showLeds(`
+                . . # . .
+                . # . . .
+                # . # # #
+                . # . . .
+                . . # . .
+                `)
+        } else {
+            basic.showLeds(`
+                . . # . .
+                . . . # .
+                # # # . #
+                . . . # .
+                . . # . .
+                `)
+        }
+        if (input.acceleration(Dimension.X) < 0) {
+            if (Lage == 0) {
+                Lage = 1
+                SchäreSteiPapier()
+            }
+        } else {
+            Lage = 0
+            strip.clear()
+            strip.show()
+        }
+    } else if (false) {
+    	
+    } else if (false) {
+    	
+    } else if (false) {
+    	
     } else {
     	
     }
